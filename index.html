@@ -572,34 +572,14 @@ cambia a auto). El contenido cabe by design en 1280×720+ */
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 3px 0 rgba(0,0,0,.85)) drop-shadow(0 0 22px rgba(120,190,255,.35));
   }
-  #menu .klogo::before { content: ''; position: absolute; left: 50%; top: 50%; width: 172%; height: 168%;
-    transform: translate(-50%,-50%); pointer-events: none;
-    background: linear-gradient(90deg, transparent 49.4%, rgba(232,185,49,.5) 49.4%, rgba(232,185,49,.5) 50.6%, transparent 50.6%),
-      linear-gradient(0deg, transparent 49.4%, rgba(120,190,255,.30) 49.4%, rgba(120,190,255,.30) 50.6%, transparent 50.6%);
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
-  #menu .klogo::after { content: ''; position: absolute; left: 50%; bottom: -14px; width: 62%; height: 3px;
-    transform: translateX(-50%);
-    background: linear-gradient(90deg, transparent, var(--gold) 18%, #fff 50%, var(--gold) 82%, transparent);
-    box-shadow: 0 0 12px rgba(232,185,49,.75); }
-  /* dorsos de carta de adorno flanqueando los botones */
-  .menudeco { display: flex; align-items: center; justify-content: center; gap: clamp(10px, 2vw, 30px); }
+  #menu .klogo::before, #menu .klogo::after { content: none; }
+  /* un dorso de carta de adorno a cada lado de los botones, quieto */
+  .menudeco { display: flex; align-items: center; justify-content: center; gap: clamp(14px, 3vw, 40px); }
   .menudeco .menubtns { margin: 20px 0; }
   .fan { display: flex; pointer-events: none; flex: 0 0 auto; }
-  .fan img { width: clamp(58px, 6.4vw, 104px); aspect-ratio: 460 / 644; object-fit: cover;
-    border-radius: 8px; box-shadow: 0 12px 30px rgba(0,0,0,.62), 0 0 0 1px rgba(255,255,255,.10) inset;
+  .fan img { width: clamp(76px, 8.4vw, 132px); aspect-ratio: 460 / 644; object-fit: cover;
+    border-radius: 10px; box-shadow: 0 14px 34px rgba(0,0,0,.66), 0 0 0 1px rgba(255,255,255,.10) inset;
     background: #0b0e14; }
-  .fan img + img { margin-left: -56px; }   /* abanico: se solapan, no se suman */
-  .fan-l img:nth-child(1) { transform: rotate(-15deg) translate(14px, -26px); z-index: 1; }
-  .fan-l img:nth-child(2) { transform: rotate(-5deg) translate(0, 0); z-index: 3; }
-  .fan-l img:nth-child(3) { transform: rotate(6deg) translate(-12px, 24px); z-index: 2; }
-  .fan-r img:nth-child(1) { transform: rotate(15deg) translate(-14px, -26px); z-index: 1; }
-  .fan-r img:nth-child(2) { transform: rotate(5deg) translate(0, 0); z-index: 3; }
-  .fan-r img:nth-child(3) { transform: rotate(-6deg) translate(12px, 24px); z-index: 2; }
-  .fan img { animation: fanfloat 7s ease-in-out infinite; }
-  .fan img:nth-child(2) { animation-delay: -2.4s; }
-  .fan img:nth-child(3) { animation-delay: -4.6s; }
-  @keyframes fanfloat { 0%, 100% { margin-top: 0; } 50% { margin-top: -9px; } }
   @media (max-width: 1080px) { .fan { display: none; } }
   #btnGameReset { display: block; width: 100%; max-width: 620px; margin: 0 auto; font-size: 16px; padding: 12px; }
   /* selector de duelo CPU vs CPU (espectador) */
@@ -802,6 +782,53 @@ cambia a auto). El contenido cabe by design en 1280×720+ */
   .die.keptpick { outline: 2px solid rgba(255,255,255,.85); }
   .diebonus { background: #0B0C10; border: 1px solid var(--gold); color: var(--gold);
     font-weight: 800; font-size: 14px; border-radius: 10px; padding: 2px 8px; white-space: nowrap; }
+  /* tirada con la CUENTA a la vista: [dado] + [BONO grande] = [TOTAL]. El dado
+     guardado enseña la cara CRUDA; lo que suma el bono va en su propia línea
+     para que se lea de un vistazo por qué cae (o aguanta) lo que cae. */
+  .diefloatwrap.deadroll { flex-direction: column; gap: 1px; }
+  .diedice { display: flex; align-items: center; gap: 5px; }
+  /* placa oscura tras la cuenta: se lee igual sobre una carta clara que oscura */
+  .diecalc { display: flex; flex-direction: column; align-items: center; gap: 1px; margin-top: 3px;
+    padding: 3px 12px 5px; border-radius: 12px; background: rgba(4,8,14,.88);
+    border: 1px solid rgba(34,211,238,.35); box-shadow: 0 6px 20px rgba(0,0,0,.6); }
+  .dietot { display: flex; align-items: baseline; justify-content: center; gap: 7px;
+    font-family: var(--hud-display); line-height: 1; color: #fff; white-space: nowrap;
+    text-shadow: 0 2px 8px rgba(0,0,0,.65); }
+  .dietot .dieneto { font-size: 26px; font-weight: 900; color: rgba(255,255,255,.78); }
+  .dietot .dieplus, .dietot .dieeq { font-size: 26px; font-weight: 900; color: rgba(255,255,255,.5); }
+  .dietot .diebonus { font-family: var(--hud-display); background: none; border: none; padding: 0;
+    font-size: 46px; font-weight: 900; line-height: .9; color: #7CF3FF;
+    text-shadow: 0 0 22px rgba(34,211,238,.95), 0 0 4px rgba(34,211,238,.9), 0 3px 8px rgba(0,0,0,.8); }
+  .dietot .diefinal { font-size: 52px; font-weight: 900; letter-spacing: -.01em; }
+  .diewhy { font-family: var(--hud-mono); font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+    color: #9BE9F7; text-align: center; margin-top: 1px; white-space: nowrap; }
+  .diewhy b { color: #7CF3FF; }
+  /* mesas en miniatura dentro de una ventana de elección (abrir el turno, etc.) */
+  /* las dos mesas en paralelo cuando hay sitio (más ancho = menos alto), en
+     columna en pantallas estrechas: la ventana no debe scrollear nunca */
+  .boardpeek { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 6px 16px;
+    margin: 10px 0 2px; padding: 9px 12px;
+    border: 1px dashed var(--hud-linea2); border-radius: 10px; background: rgba(255,255,255,.03); }
+  .bprow { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .bptitle { font-family: var(--hud-mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--hud-acento); white-space: nowrap; }
+  .bpmeta { font-family: var(--hud-mono); font-size: 10px; letter-spacing: .05em;
+    color: var(--hud-tinta3, #7f8ea3); text-transform: uppercase; white-space: nowrap; }
+  .bplegend { grid-column: 1 / -1; font-family: var(--hud-mono); font-size: 9.5px; letter-spacing: .05em;
+    color: var(--hud-tinta3, #7f8ea3); text-transform: uppercase; }
+  .bpcards { display: flex; gap: 7px; flex-wrap: wrap; align-items: flex-start; min-height: 20px; }
+  .bpcell { display: flex; flex-direction: column; align-items: center; gap: 2px; width: 56px; }
+  .boardpeek .card { width: 56px; height: 78px; border-radius: 7px; flex: 0 0 56px; }
+  .boardpeek .card > img { border-radius: 7px; }
+  .boardpeek .card.tapped > img { transform: rotate(90deg) scale(.72); }
+  .bpstat { font-family: var(--hud-mono); font-size: 10px; color: var(--hud-tinta2);
+    white-space: nowrap; text-align: center; line-height: 1.2; max-width: 56px; overflow: hidden;
+    text-overflow: ellipsis; }
+  .bpstat.warn { color: #FFB4A6; }
+  .bpnone { font-family: var(--hud-mono); font-size: 12px; color: var(--hud-tinta3, #7f8ea3); }
+  /* contador de energías de la ventana (0/2, 1/2 …): el tope del turno, grande */
+  #choiceStatus.big { font-size: 20px; letter-spacing: .04em; color: var(--hud-acento); }
+  #choiceStatus.big.full { color: #FFD76A; }
   .drawduel { gap: 26px; animation-duration: 3.8s; }
   .drawcol { display: flex; flex-direction: column; align-items: center; gap: 6px; }
   .drawname { color: var(--gold); font-weight: 800; font-size: 13px; text-shadow: 0 2px 4px #000; white-space: nowrap; }
@@ -1415,9 +1442,9 @@ button:disabled { filter: grayscale(.25); }
   <div class="box">
     <div class="langpick"><button id="langEs" title="Español"><span class="fl fl-es"></span>ES</button><button id="langEn" title="English"><span class="fl fl-en"></span>EN</button></div>
     <h1 class="klogo" aria-label="KIRETSU"><span>KIRETSU</span></h1>
-    <p><span data-i="menuSub">Duelo de mechs, pilotos y kaijus · Infiltration o Siege · </span><span id="menuElo"></span> · <span id="buildTag" title="versión de esta copia">build 20261017-1538</span></p>
+    <p><span data-i="menuSub">Duelo de mechs, pilotos y kaijus · 5 vidas · </span><span id="menuElo"></span> · <span id="buildTag" title="versión de esta copia">build 20261018-0246</span></p>
     <div class="menudeco" aria-hidden="true">
-      <div class="fan fan-l"><img alt=""><img alt=""><img alt=""></div>
+      <div class="fan fan-l"><img alt=""></div>
       <div class="menubtns">
         <button class="primary" id="btnGoSetup" data-i="mPlay">Simulacrum (Empezar partida)</button>
         <button id="btnGoChamp" data-i="mChamp">🏆 Campeonato (16 · playoffs)</button>
@@ -1429,7 +1456,7 @@ button:disabled { filter: grayscale(.25); }
         <button id="btnGoLiga" data-i="mLiga">🏟️ Simulación CPU (6 duelos)</button>
         <button id="btnGoWatch" data-i="mWatch">👀 Ver duelo CPU vs CPU</button>
       </div>
-      <div class="fan fan-r"><img alt=""><img alt=""><img alt=""></div>
+      <div class="fan fan-r"><img alt=""></div>
     </div>
     <div class="watchpick">
       <div class="watchrow hidden" id="watchRow">
@@ -1457,12 +1484,6 @@ button:disabled { filter: grayscale(.25); }
         <div class="panel-scroll">
           <div class="factions" id="facPick"></div>
           <div class="setup-badge" id="facInfo"></div>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="setup-col-title" data-i="suMode">Modo de juego</div>
-        <div class="panel-scroll">
-          <div class="modes" id="modePick"></div>
         </div>
       </div>
       <div class="panel">
@@ -1537,6 +1558,7 @@ button:disabled { filter: grayscale(.25); }
   <div class="box" style="max-width:900px">
     <h2 id="choiceTitle">Elige una carta</h2>
     <p id="choiceText"></p>
+    <div id="choicePeek" class="hidden"></div>
     <div id="choiceStatus" class="hint"></div>
     <div id="choiceCards" class="pile-row"></div>
     <div class="actions">
@@ -1719,7 +1741,7 @@ button:disabled { filter: grayscale(.25); }
 const I18N = {
   es: {
     handLbl: 'TU MANO', lblDeck: 'MAZO', lblDiscard: 'DESCARTE', lblLives: 'VIDAS',
-    menuSub: 'Duelo de mechs, pilotos y kaijus · Infiltration o Siege · ',
+    menuSub: 'Duelo de mechs, pilotos y kaijus · 5 vidas · ',
     mPlay: 'Simulacrum (Empezar partida)', mChamp: '🏆 Campeonato (16 · playoffs)', mTut: '🎓 Tutorial: cómo se juega',
     mSets: '🃏 Ver sets', mStats: '🏆 Estadísticas',
     setsPreview: 'VISTA PREVIA', setsClear: 'Limpiar', setsSearchPh: 'Buscar por nombre, tipo o número…',
@@ -1728,9 +1750,9 @@ const I18N = {
     setsNoResT: 'Sin resultados', setsNoResH: 'Prueba con otro nombre, tipo o número de carta.',
     setsRarity: 'Rareza {r}', setsViewCard: 'Ver {n}', setsImgAlt: 'Carta seleccionada',
     setsAriaSets: 'Sets', setsAriaFacs: 'Facciones', setsAriaPrev: 'Vista previa de carta',
-    suIntro: 'Elige tus <b>2 facciones</b> (cada una de un set) y el <b>modo</b>: tu mazo será 20+20 de esos colores (8M+5P+7K por color). Las energías salen de tu propio mazo.',
+    suIntro: 'Elige tus <b>2 facciones</b> (cada una de un set): tu mazo será 20+20 de esos colores (8M+5P+7K por color). Las energías salen de tu propio mazo.',
     suPickFac: 'Tus 2 facciones', suPickFacSub: '(elige 2 colores y set)',
-    suMode: 'Modo de juego', suPickOpp: 'Elige rival', suPickOppSub: '(3 retadores al azar; refresca al volver al setup)',
+    suPickOpp: 'Elige rival', suPickOppSub: '(3 retadores al azar; refresca al volver al setup)',
     btnStart: 'Empezar partida', btnMenu: '← Menú', btnEndMenu: 'Volver al menú de inicio',
     muTitle: 'Mano inicial', muAsk: '¿La conservas o la cambias? (1 mulligan gratis: barajas y robas 4). El que empieza juega su primer turno con 4 cartas; el otro roba la 5.ª al resolverse el sorteo.',
     btnMull: 'Mulligan (barajar y robar 4)', btnKeep: 'Me la quedo',
@@ -1742,9 +1764,9 @@ const I18N = {
   hp1: '<b>1 · Abre el turno:</b> robas <b>2 cartas</b> de tu mazo y colocas <b>hasta 2 de tu mano boca abajo como energía</b> (reserva máxima de 5). Mazo vacío al robar: el descarte se baraja y vuelve a ser el mazo.',
     hp2: '<b>2 · Despliega</b> (hasta 5 por turno; máximo 5 MECH + KAIJU en mesa; los PILOT no cuentan): paga el COSTE girando tantas energías preparadas como indique (el color ya no cuenta); el SACRIFICIO descarta al descarte tantas energías <b>ya agotadas por el coste</b> como indique (una 4/3 agota 4 y descarta 3 de esas 4). Las unidades entran <b>GIRADAS</b> (no pueden usarse hasta tu próximo turno). Si ya tienes 5 y quieres desplegar otra, elige qué unidad de tu mesa quieres descartar. El PILOT se baja clicando en él y luego en el MECH libre donde montarlo (comparten el mejor dado y los poderes de ambos). Las cartas con borde <b style="color:var(--gold)">dorado</b> son las que puedes pagar.',
     hp3: '<b>3 · Ataca con cada unidad preparada</b> (1 vez cada una; al atacar se gira): unidad enemiga (borde <b style="color:var(--red)">rojo</b>) o las VIDAS del rival. Los dados se tiran EN EL MOMENTO sobre las cartas; ATK ≥ DEF descarta a la defensora. La vida más expuesta defiende con la escalera del modo (menos vidas = dado mayor); si la vences, esa carta va a TU mano. Máx. 1 vida perdida por turno y jugador: no puedes volver a atacar vidas si el rival ya perdió una este turno.',
-    hp4: '<b>Modos:</b> INFILTRATION (5 vidas, d4→d12) · SIEGE (10 vidas, d4 · 2d4 · d6 · 2d6 ⬦ 2d12, ELO x2).',
+    hp4: '<b>Vidas:</b> siempre <b>5</b>, con escalera d4 → d12: la 1ª vida (la más expuesta) defiende con d4 y la última con d12.',
   hp5: '<b>Zonas:</b> MAZO (robas de ahí) · ENERGÍA (tus cartas boca abajo, máximo 5 y 2 por turno) · DESCARTE (clic para verlo) · VIDAS (dorsos con su dado). La mano inicial es de <b>4 cartas</b> para quien empieza y <b>5</b> para el otro; el que empieza con <b>1 energía lista</b> y el segundo con <b>2</b>. <b>No hay descarte al final del turno ni límite de cartas en mano</b>: acabas el turno tal cual.',
-    hp6: '<b>Reacción INTERCEPT:</b> durante el turno del rival, si tienes energía, puedes bajar un INTERCEPT de tu mano (pagando su coste) para que defienda una sola vez una unidad o una vida. Después la unidad se queda en tu mesa, aunque entra tapada y ya no puede volver a reaccionar.',
+    hp6: '<b>INTERCEPT:</b> se despliega como cualquier unidad en tu turno (pagando su coste). Además, durante el turno del rival y si tienes energía, puedes bajarlo <b>desde la mano</b> como <b>REACCIÓN</b> (pagando su coste) para que reciba un ataque dirigido a una unidad o a una vida; después se queda en tu mesa, tapada, y ya no reacciona. La reacción solo se juega desde la mano.',
     hp7: '<b>Pierdes</b> al quedarte sin vidas (el mazo nunca se agota: si se vacía, el descarte se baraja y vuelve a ser el mazo). Al llegar a 0 vidas juegas un ⚠ ÚLTIMO TURNO extra antes de caer (puede haber empates).',
     hp7b: '<b>Facciones y sets</b>: los 6 sets están disponibles desde el inicio; no hay desbloqueos ni recompensas.',
     hp8: 'Pasa el ratón por cualquier carta para verla en grande.', btnGotIt: 'Entendido',
@@ -1758,6 +1780,12 @@ const I18N = {
   energyAsk: 'Energías de este turno', energyAskText: 'Puedes colocar las que quieras: se van BOCA ABAJO a tu reserva (te quedan {n} huecos) y pagan 1 punto cada una. Al gastarlas van al descarte. Si no colocas ninguna, pasa con "Listo".',
   energySet: 'Energía colocada boca abajo', energySetN: '{n} carta(s) boca abajo como energía', energyFull: 'energía al máximo (5)', energyCardT: 'Energía boca abajo',
   energyZoneT: 'Energías boca abajo: cada una paga 1 punto al jugarse', toDiscard: 'descarte',
+  energyPick: '{n}/{max} colocadas · quedan {left}', energyPickFull: '{n}/{max} colocadas · TOPE del turno',
+  peekMine: 'TU MESA', peekOpp: 'MESA RIVAL',
+  peekLives: 'vidas', peekLegend: 'cada miniatura: dado de ATK / dado de DEF · ★ piloto montado',
+  peekReadyOne: 'lista', peekReadyMany: 'listas',
+  peekEmpty: 'mesa vacía', peekSpent: 'girada', peekPilot: 'piloto',
+  bonusCard: 'CARTA', bonusWhy: 'BONO',
   chargedDrawLbl: ' · CHARGED: roba 1 carta del mazo y la pone boca abajo',
   superchargedDrawLbl: ' · SUPERCHARGED: roba 2 cartas del mazo y las pone boca abajo',
   chargedDraw: ' · CHARGED: roba 1 carta del mazo y la pone boca abajo',
@@ -1783,7 +1811,6 @@ const I18N = {
     chargedNo: ' · CHARGED: no queda sitio para más energía (5 en mesa)',
     reactUnit: 'una unidad', reactLife: 'una vida',
     interceptSpent: '{p}: el INTERCEPT {c} aguanta y se queda en mesa',
-    interceptReactionOnly: 'INTERCEPT solo se juega como reacción en el turno del rival',
     oneLifeLeft: 'Queda 1 vida', livesLeft: 'Quedan {n} vidas',
     mounts: ' monta ', pilotPick: 'PILOT {c}: elige un MECH libre de tu mesa para montarlo (no ocupa casilla, comparte su mejor dado y sus poderes).', deploys: ' baja ', scout: ' · SCOUT', hexLbl: ' · HEX: ', hexYou: ' descartas ', hexOpp: ' descarta ',
     dieAtk: 'ATK', dieDef: 'DEF', dieLife: 'VIDA', atkBanner: '⚔ {c} ataca', atkBannerN: '⚔ {p} ataca con {c}',
@@ -1812,8 +1839,8 @@ const I18N = {
     mullLog: 'MULLIGAN: nueva mano de 4', mullName: ': MULLIGAN',
     drawMine: '🎲 Sorteo 1d12: tú {a} vs rival {b} → EMPIEZAS TÚ (mano de 4; el rival roba su 5.ª)', drawOpp: '🎲 Sorteo 1d12: tú {a} vs rival {b} → EMPIEZA EL RIVAL (tú robas tu 5.ª)',
     drawSpec: '🎲 Sorteo 1d12: {A} {a} vs {B} {b} → empieza ',
-    specHdr: '👀 {m} · ESPECTADOR: {b} ({bf}) vs {t} ({tf}) —', gameHdr: '⚔ {m} · Partida iniciada: {mf} vs {o} ({of}) —',
-    elo: 'tu ELO: ', eloB: 'ELO ', x2: 'ELO x',
+    specHdr: '👀 ESPECTADOR: {b} ({bf}) vs {t} ({tf}) —', gameHdr: '⚔ Partida iniciada: {mf} vs {o} ({of}) —',
+    elo: 'tu ELO: ', eloB: 'ELO ',
     facNeed: 'El PILOT necesita un MECH libre donde montar',
     maxUnits: 'Máximo 5 unidades en mesa (MECH + KAIJU). Elige una unidad para descartarla y desplegar esta.',
 unitChoiceTitle: 'Elige una unidad para descartar',
@@ -1910,8 +1937,7 @@ tut: [
     'Algunos poderes (repeticiones, +3, <b>ADVANTAGE</b>) modifican tu tirada y se resuelven justo después de tirar.',
   ], cards: [['veil', 14], ['veil', 4], ['veil', 9]], cap: ['+3 al atacar', 'MECH + PILOT montado'] },
   { t: '❤️ Vidas', x: 'La vida más expuesta defiende con un dado <b>creciente</b>: cuantas menos vidas le quedan, más grande el dado.', list: [
-    '<b>INFILTRATION</b>: d4 → d12 (5 vidas).',
-    '<b>SIEGE</b>: d4 · 2d4 · d6 · 2d6 ⬦ 2d12 (10 vidas, ELO ×2).',
+    '<b>Siempre 5 vidas</b>, con escalera d4 → d12.',
     'Si vences ese dado, la carta va a la <b>mano de su dueño</b>.',
     'A 0 vidas juegas un ⚠ <b>ÚLTIMO TURNO</b>: si sigues a 0 al terminarlo, caes.',
     '<b>No pierdes por agotar el mazo</b>: si se vacía, el descarte se baraja y vuelve a ser el mazo.',
@@ -1924,14 +1950,14 @@ tut: [
     '<span class="pchip">SHARPSHOOTER</span> El ataque descarta un PILOT montado en vez de resolverse.',
     '<span class="pchip">HEX</span> El rival descarta 1 carta al azar.',
     '<span class="pchip">BLOODRUSH</span> / <span class="pchip">LAST STAND</span> Repiten los 1 de su tirada.',
-    '<span class="pchip">WARCRY</span> / <span class="pchip">RALLY</span> +1 a las OTRAS unidades de su color.',
+    '<span class="pchip">WARCRY</span> / <span class="pchip">RALLY</span> +1 a OTRAS unidades de su color (un PILOT montado también se lo da al MECH que lo lleva).',
     '<span class="pchip">COUNTDOWN</span> +3 al atacar y se descarta después.',
     '<span class="pchip">ADVANTAGE</span> Al atacar puedes repetir tus dados una vez y te quedas con la última tirada.',
     '<span class="pchip">FAST</span> Entra lista: puede atacar el mismo turno.',
     '<span class="pchip">GUARDIAN</span> +1 a las tiradas de defensa de tus vidas (máx. +1).',
     '<span class="pchip">PIERCE</span> Ignora la obligación de atacar al DEFENDER.',
     '<span class="pchip">DEFENDER</span> Los enemigos deben atacar esta unidad primero.',
-    '<span class="pchip">INTERCEPT</span> Se juega desde la mano en el turno del rival (pagando) para defender una vez; la unidad se queda en mesa.',
+    '<span class="pchip">INTERCEPT</span> Se despliega normal en tu turno; además, desde la mano en el turno del rival (pagando) puede recibir un ataque, y la unidad se queda en mesa.',
   ], note: 'Pasa el ratón por cualquier carta en partida para ver su texto completo.', cards: [['veil', 6], ['veil', 2], ['covenant', 1]], cap: ['SCOUT', 'GUARDIAN', 'INTERCEPT'] },
 ],
     people: {
@@ -1971,7 +1997,7 @@ tut: [
   },
   en: {
     handLbl: 'YOUR HAND', lblDeck: 'DECK', lblDiscard: 'DISCARD', lblLives: 'LIVES',
-    menuSub: 'Duel of mechs, pilots and kaijus · Infiltration or Siege · ',
+    menuSub: 'Duel of mechs, pilots and kaijus · 5 lives · ',
     mPlay: '⚔ Start game', mChamp: '🏆 Championship (16 · playoffs)', mTut: '🎓 Tutorial: how to play',
     mSets: '🃏 Browse sets', mStats: '🏆 Statistics',
     setsPreview: 'PREVIEW', setsClear: 'Clear', setsSearchPh: 'Search by name, type or number…',
@@ -1980,9 +2006,9 @@ tut: [
     setsNoResT: 'No results', setsNoResH: 'Try another name, type or card number.',
     setsRarity: 'Rarity {r}', setsViewCard: 'View {n}', setsImgAlt: 'Selected card',
     setsAriaSets: 'Sets', setsAriaFacs: 'Factions', setsAriaPrev: 'Card preview',
-    suIntro: 'Pick your <b>2 factions</b> (each from one set) and the <b>mode</b>: your deck will be 20+20 of those colors (8M+5P+7K each). Energy comes from your own deck.',
+    suIntro: 'Pick your <b>2 factions</b> (each from one set): your deck will be 20+20 of those colors (8M+5P+7K each). Energy comes from your own deck.',
     suPickFac: 'Your 2 factions', suPickFacSub: '(pick 2 colors & set)',
-    suMode: 'Game mode', suPickOpp: 'Choose opponent', suPickOppSub: '(3 random challengers; refreshes when you come back to setup)',
+    suPickOpp: 'Choose opponent', suPickOppSub: '(3 random challengers; refreshes when you come back to setup)',
     btnStart: 'Start game', btnMenu: '← Menu', btnEndMenu: 'Back to main menu',
     muTitle: 'Opening hand', muAsk: 'Keep it or redraw? (1 free mulligan: shuffle and draw 4). The seat that starts plays its first turn with 4 cards; the other draws its 5th once the draw-off is resolved.',
     btnMull: 'Mulligan (shuffle and draw 4)', btnKeep: 'Keep it',
@@ -1994,9 +2020,9 @@ tut: [
   hp1: '<b>1 · Open your turn:</b> you <b>draw 2 cards</b> from your deck and put <b>up to 2 from your hand face down as energy</b> (reserve max 5). Empty deck when drawing: the discard pile is shuffled back into the deck.',
     hp2: '<b>2 · Deploy</b> (up to 5 per turn; maximum 5 MECHS + KAIJUS on board; PILOTS do not count): pay the COST by tapping as many ready energies as the COST (colour no longer matters); SACRIFICE discards as many <b>energies already tapped by the cost</b> as it states (a 4/3 taps 4 and discards 3 of those 4) into the DISCARD. Units enter <b>TAPPED</b> (they cannot act until your next turn). If you already have 5 and want to deploy another, choose which unit on your board to discard. A PILOT is played by clicking it and then the free MECH to mount (they share the best die and both powers). Cards with a <b style="color:var(--gold)">golden</b> outline are the ones you can afford.',
     hp3: '<b>3 · Attack with each ready unit</b> (once each; it taps when attacking): an enemy unit (<b style="color:var(--red)">red</b> outline) or the opponent\'s LIVES. Dice are rolled ON THE SPOT over the cards; ATK ≥ DEF discards the defender. The most exposed life defends with the mode\'s ladder (fewer lives = bigger die); if you beat it, that card goes to YOUR hand. Max. 1 life lost per turn and player: you cannot attack LIVES again if the opponent already lost one this turn.',
-    hp4: '<b>Modes:</b> INFILTRATION (5 lives, d4→d12) · SIEGE (10 lives, d4 · 2d4 · d6 · 2d6 ⬦ 2d12, ELO x2).',
+    hp4: '<b>Lives:</b> always <b>5</b>, ladder d4 → d12: the 1st life (the most exposed) defends with d4 and the last with d12.',
   hp5: '<b>Zones:</b> DECK (you draw from it) · ENERGY (your face-down cards, max 5 and 2 per turn) · DISCARD (click to view) · LIVES (backs with their die). The opening hand holds <b>4 cards</b> for the starting seat and <b>5</b> for the other; the starting seat gets <b>1 ready energy</b> and the other <b>2</b>. <b>There is no end-of-turn discard and no hand limit</b>: you just end the turn.',
-    hp6: '<b>INTERCEPT reaction:</b> on the opponent\'s turn, if you have energy, you may play an INTERCEPT from your hand (paying its cost) to defend a unit or a life once. Afterwards the unit stays on your table, though it enters tapped and cannot react again.',
+    hp6: '<b>INTERCEPT:</b> it deploys like any other unit on your turn (paying its cost). On top of that, on the opponent\'s turn and if you have energy, you may play it <b>from your hand</b> as a <b>REACTION</b> (paying its cost) so it takes an attack aimed at a unit or a life; afterwards it stays on your table, tapped, and cannot react again. The reaction is hand-only.',
     hp7: '<b>You lose</b> when you run out of lives (the deck never runs out: if emptied, the discard pile is shuffled back into the deck). At 0 lives you play one extra LAST TURN before falling (draws are possible).',
     hp7b: '<b>Factions and sets</b>: all 6 sets are available from the start; no unlocks or rewards.',
     mPlay: 'Simulacrum (Start Game)',
@@ -2011,6 +2037,12 @@ tut: [
   energyAsk: 'Energies this turn', energyAskText: 'You may place as many as you want: they go FACE DOWN into your reserve ({n} slots left) and each pays 1 point. Spent energies go to the discard. Place none and press "Ready".',
   energySet: 'Energy set face down', energySetN: '{n} card(s) set face down as energy', energyFull: 'energy already at max (5)', energyCardT: 'Face-down energy',
   energyZoneT: 'Face-down energies: each one pays 1 point when played', toDiscard: 'discard',
+  energyPick: '{n}/{max} placed · {left} left', energyPickFull: '{n}/{max} placed · turn cap',
+  peekMine: 'YOUR BOARD', peekOpp: 'OPPONENT BOARD',
+  peekLives: 'lives', peekLegend: 'each mini: ATK die / DEF die · ★ mounted pilot',
+  peekReadyOne: 'ready', peekReadyMany: 'ready',
+  peekEmpty: 'empty board', peekSpent: 'tapped', peekPilot: 'pilot',
+  bonusCard: 'CARD', bonusWhy: 'BONUS',
   chargedDrawLbl: ' · CHARGED: draws 1 card from the deck and sets it face down',
   superchargedDrawLbl: ' · SUPERCHARGED: draws 2 cards from the deck and sets them face down',
   chargedDraw: ' · CHARGED: draws 1 card from the deck and sets it face down',
@@ -2036,7 +2068,6 @@ tut: [
     chargedNo: ' · CHARGED: no room left for more energy (5 on the table)',
     reactUnit: 'a unit', reactLife: 'a life',
     interceptSpent: '{p}: {c}\'s INTERCEPT holds the line and stays on the table',
-    interceptReactionOnly: 'INTERCEPT can only be played as a reaction on the opponent\'s turn',
     oneLifeLeft: '1 life left', livesLeft: '{n} lives left',
     mounts: ' mounts ', pilotPick: 'PILOT {c}: pick a free MECH on your table to mount it on (it takes no slot and shares its best die and its powers).', deploys: ' plays ', scout: ' · SCOUT', hexLbl: ' · HEX: ', hexYou: ' discard ', hexOpp: ' discards ',
     dieAtk: 'ATK', dieDef: 'DEF', dieLife: 'LIFE', atkBanner: '⚔ {c} attacks', atkBannerN: '⚔ {p} attacks with {c}',
@@ -2065,8 +2096,8 @@ tut: [
     mullLog: 'MULLIGAN: fresh hand of 4', mullName: ': MULLIGAN',
     drawMine: '🎲 1d12 draw: you {a} vs opponent {b} → YOU START (4-card hand; opponent draws its 5th)', drawOpp: '🎲 1d12 draw: you {a} vs opponent {b} → OPPONENT STARTS (you draw your 5th)',
     drawSpec: '🎲 1d12 draw: {A} {a} vs {B} {b} → starts ',
-    specHdr: '👀 {m} · SPECTATOR: {b} ({bf}) vs {t} ({tf}) —', gameHdr: '⚔ {m} · Game started: {mf} vs {o} ({of}) —',
-    elo: 'your ELO: ', eloB: 'ELO ', x2: 'ELO x',
+    specHdr: '👀 SPECTATOR: {b} ({bf}) vs {t} ({tf}) —', gameHdr: '⚔ Game started: {mf} vs {o} ({of}) —',
+    elo: 'your ELO: ', eloB: 'ELO ',
     facNeed: 'The PILOT needs a free MECH to mount',
     maxUnits: 'Max 5 units on board (MECH + KAIJU). Choose a unit to discard so you can deploy this one.',
     unitChoiceTitle: 'Choose a unit to discard',
@@ -2163,8 +2194,7 @@ tut: [
     'Some powers (rerolls, +3, <b>ADVANTAGE</b>) modify your roll and resolve right after you cast it.',
   ], cards: [['veil', 14], ['veil', 4], ['veil', 9]], cap: ['+3 when attacking', 'MECH + mounted PILOT'] },
   { t: '❤️ Lives', x: 'The most exposed life defends with a <b>growing die</b>: the fewer lives it has left, the bigger the die.', list: [
-    '<b>INFILTRATION</b>: d4 → d12 (5 lives).',
-    '<b>SIEGE</b>: d4 · 2d4 · d6 · 2d6 ⬦ 2d12 (10 lives, ELO ×2).',
+    '<b>Always 5 lives</b>, ladder d4 → d12.',
     'Beat it and that card goes to the <b>opponent\'s hand</b>.',
     'At 0 lives you play one ⚠ <b>LAST TURN</b>: if you are still at 0 when it ends, you fall.',
     '<b>You never lose by running out of deck</b>: the discard is shuffled back into it.',
@@ -2177,14 +2207,14 @@ tut: [
     '<span class="pchip">SHARPSHOOTER</span> The attack discards an enemy mounted PILOT instead of resolving.',
     '<span class="pchip">HEX</span> The opponent randomly discards 1 card.',
     '<span class="pchip">BLOODRUSH</span> / <span class="pchip">LAST STAND</span> Reroll their 1s.',
-    '<span class="pchip">WARCRY</span> / <span class="pchip">RALLY</span> +1 to OTHER units of their colour.',
+    '<span class="pchip">WARCRY</span> / <span class="pchip">RALLY</span> +1 to OTHER units of their colour (a mounted PILOT also grants it to the MECH it rides).',
     '<span class="pchip">COUNTDOWN</span> +3 when attacking, then it is discarded.',
     '<span class="pchip">ADVANTAGE</span> When attacking you may reroll your dice once and keep the last roll.',
     '<span class="pchip">FAST</span> Enters ready: it can attack the turn you deploy it.',
     '<span class="pchip">GUARDIAN</span> +1 to your lives\' defence rolls (max +1).',
     '<span class="pchip">PIERCE</span> Ignores the obligation to hit the DEFENDER.',
     '<span class="pchip">DEFENDER</span> Enemies must attack this unit first.',
-    '<span class="pchip">INTERCEPT</span> Played from hand on the opponent\'s turn (paying) to defend once; the unit stays on the table.',
+    '<span class="pchip">INTERCEPT</span> Deploys normally on your turn; on top of that, from hand on the opponent\'s turn (paying) it can take an attack, and the unit stays on the table.',
   ], note: 'Hover any card during a match to see its full text.', cards: [['veil', 6], ['veil', 2], ['covenant', 1]], cap: ['SCOUT', 'GUARDIAN', 'INTERCEPT'] },
 ],
     people: {
@@ -2297,19 +2327,11 @@ const dbg = e => { if (window.FG_DEBUG) console.warn('[FG]', e); };
 const el = (t, c) => { const e = document.createElement(t); if (c) e.className = c; return e; };
 
 const FAC_COLOR = { veil: 'var(--v)', covenant: 'var(--c)', ironfall: 'var(--i)', nexus: 'var(--n)', verdance: 'var(--g)', forge: 'var(--f)' };
-// modos de juego: Infiltration (clásico 5 vidas) y Siege (10 vidas, ELO x2)
-const MODES = {
-  infiltration: {
-    name: 'INFILTRATION', elo: 1,
-    get desc() { return LANG === 'en' ? '5 lives. The classic ladder: the 1st defends with d4, the last with d12.' : '5 vidas. La escalera clásica: la 1ª defiende con d4, la última con d12.'; },
-    ladder: n => ['d4', 'd6', 'd8', 'd10', 'd12'].slice(5 - n),
-  },
-  siege: {
-    name: 'SIEGE', elo: 2,
-    get desc() { return LANG === 'en' ? '10 lives · doubled ladder: d4 · 2d4 · d6 · 2d6 · d8 · 2d8 · d10 · 2d10 · d12 · 2d12. ELO x2 (win or lose).' : '10 vidas · dobla la escalera: d4 · 2d4 · d6 · 2d6 · d8 · 2d8 · d10 · 2d10 · d12 · 2d12. ELO x2 (ganes o pierdas).'; },
-    ladder: n => ['d4', '2d4', 'd6', '2d6', 'd8', '2d8', 'd10', '2d10', 'd12', '2d12'].slice(10 - n),
-  },
-};
+// Sin modos de juego: siempre 5 vidas y la escalera clásica d4→d12. La 1ª vida
+// (la más expuesta) defiende con d4 y la última con d12.
+const LIVES = 5;
+const LADDER_VIDAS = ['d4', 'd6', 'd8', 'd10', 'd12'];
+const ladderVidas = n => LADDER_VIDAS.slice(LIVES - Math.max(1, Math.min(LIVES, n)));
 const parseDieStr = s => { const m = s.match(/^(\d*)d(\d+)$/); return m ? { n: m[1] ? +m[1] : 1, faces: +m[2] } : { n: 1, faces: 4 }; };
 const dieLabel = s => s.startsWith('2d') ? s.toUpperCase() : s.toUpperCase();
 const FAC_LABEL = new Proxy({ veil: 'Veil', covenant: 'Covenant', ironfall: 'Ironfall', nexus: 'Nexus', verdance: 'Verdance', forge: 'Forge' }, { get: (t, k) => t[k] });
@@ -2321,7 +2343,7 @@ const SET_LABEL = new Proxy({ 1: 'Set 01', 2: 'Set 02', 3: 'Set 03', 4: 'Set 04'
 const ALL_SETS = (D && Array.isArray(D.sets) && D.sets.length) ? D.sets : [1, 2, 3];
 const N_COMBOS = D.factions.length * ALL_SETS.length;
 const img = k => D.imgs[k] ?? '';
-// (la escalera de vidas sale de MODES[modo].ladder: las vidas guardan SU dado)
+// (las vidas guardan SU dado: la escalera va aparte del resto de dados)
 const PLAY_SET = 1; // set por defecto si una carta no trae el suyo (la galería enseña TODOS)
 
 /* ---------- persistencia (stats + ELO) ---------- */
@@ -2753,9 +2775,9 @@ return out.map(c => ({ ...c }));   // copia propia: los flags de partida (isEner
   return { units: shuf([...mk(pick1.f, pick1.s), ...mk(pick2.f, pick2.s)]) };
 }
 
-function mkPlayer(deck, name, color, mode) {
+function mkPlayer(deck, name, color) {
   const lib = [...deck.units];
-  const L = MODES[mode].ladder(10);
+  const L = ladderVidas(LIVES);
   const nLives = L.length;
   const lives = lib.splice(0, nLives).map((c, i) => ({ lifeCard: c, die: L[i] }));
   const eTable = [];   // { card, tapped }: cartas normales boca abajo
@@ -2785,7 +2807,7 @@ function endStatsHtml() {
   return h;
 }
 
-function newGame(mine, opp, persona, mode, spec) {
+function newGame(mine, opp, persona, spec) {
   // spec: { topId, botId } — espectador/campeonato: dos CPUs jugando (top arriba, bot abajo)
   // Todo lo que vive fuera de G se limpia aquí: si no, la partida anterior deja
   // un atacante marcado, un piloto pendiente de montar o un modal de elección
@@ -2797,10 +2819,10 @@ function newGame(mine, opp, persona, mode, spec) {
   const topP = PERSONAS[specMode ? spec.topId : persona];
   const botP = specMode ? PERSONAS[spec.botId] : null;
   G = {
-    P: mkPlayer(buildDeck(...(specMode ? opp : mine)), specMode ? botP.name : T('you'), FAC_COLOR[(specMode ? opp : mine)[0].f], mode),
-    O: mkPlayer(buildDeck(...(specMode ? mine : opp)), specMode ? topP.name : PERSONAS[persona].name, FAC_COLOR[(specMode ? mine : opp)[0].f], mode),
+    P: mkPlayer(buildDeck(...(specMode ? opp : mine)), specMode ? botP.name : T('you'), FAC_COLOR[(specMode ? opp : mine)[0].f]),
+    O: mkPlayer(buildDeck(...(specMode ? mine : opp)), specMode ? topP.name : PERSONAS[persona].name, FAC_COLOR[(specMode ? mine : opp)[0].f]),
     turn: 1, over: false, phase: 'mulligan', busy: false, mullUsed: false, stats: null, auto: false, // auto: la ÓPTIMA juega tus turnos
-    persona, mode, t0: Date.now(), spec: specMode ? spec : null,
+    persona, t0: Date.now(), spec: specMode ? spec : null,
   };
   G.tact = {}; // táctica elegida (bandit) por cada CPU de ESTA partida
   for (const pid of specMode ? [spec.topId, spec.botId] : [persona]) G.tact[pid] = pickTact(pid);
@@ -2825,8 +2847,8 @@ function newGame(mine, opp, persona, mode, spec) {
     }
   }
   const fl = p => FAC_LABEL[p.f] + ' ' + SET_LABEL[p.s];
-  if (specMode) logLine(fmtT(T('specHdr'), { m: MODES[mode].name, b: PERSONAS[spec.botId].name, bf: fl(opp[0]) + ' + ' + fl(opp[1]), t: PERSONAS[spec.topId].name, tf: fl(mine[0]) + ' + ' + fl(mine[1]) }), 'hl');
-  else logLine(fmtT(T('gameHdr'), { m: MODES[mode].name, mf: fl(mine[0]) + ' + ' + fl(mine[1]), o: PERSONAS[persona].name, of: fl(opp[0]) + ' + ' + fl(opp[1]) }), 'hl');
+  if (specMode) logLine(fmtT(T('specHdr'), { b: PERSONAS[spec.botId].name, bf: fl(opp[0]) + ' + ' + fl(opp[1]), t: PERSONAS[spec.topId].name, tf: fl(mine[0]) + ' + ' + fl(mine[1]) }), 'hl');
+  else logLine(fmtT(T('gameHdr'), { mf: fl(mine[0]) + ' + ' + fl(mine[1]), o: PERSONAS[persona].name, of: fl(opp[0]) + ' + ' + fl(opp[1]) }), 'hl');
   if (specMode) startSpecMatch();
   else { $('handzone').querySelector('.zone-label').textContent = T('handLbl'); showMulligan(); }
 }
@@ -2857,10 +2879,15 @@ const has = (u, pw) => u.card.powers.includes(pw) || (u.pilot && u.pilot.powers.
 // (el portador no se buffa a sí mismo).
 // Ojo: si lo lleva el PILOT montado, es la facción del piloto la que suma (antes se
 // miraba solo la del MECH, y un piloto de otra facción buffeaba al MECH equivocado).
-const aura = (P, pw, f, self = null) => units(P).filter(u => u !== self && (
-  (u.card.powers.includes(pw) && u.card.faction === f) ||
-  (u.pilot && u.pilot.powers.includes(pw) && u.pilot.faction === f)
-)).length;
+// KIRETSU: una unidad NUNCA se buffa con SU PROPIO poder, pero el PILOT es otra
+// carta: si el piloto montado lleva WARCRY/RALLY de la facción del MECH, ese
+// MECH sí recibe el +1 (antes se contaba solo para las demás unidades y el bono
+// del piloto se perdía justo en el mech que lo lleva).
+const aura = (P, pw, f, self = null) => units(P).filter(u => {
+  const porCarta = u.card.powers.includes(pw) && u.card.faction === f;
+  const porPiloto = !!u.pilot && u.pilot.powers.includes(pw) && u.pilot.faction === f;
+  return u === self ? porPiloto : (porCarta || porPiloto);
+}).length;
 // KIRETSU: la energía está boca abajo y no tiene color → cualquier energía
 // preparada paga 1 punto, sea cual sea la facción de la carta.
 const MAX_ENERGY = 5;
@@ -2870,7 +2897,10 @@ const MAX_ENERGY = 5;
 const MAX_ENERGY_PER_TURN = 2;
 const awake = P => P.eTable.filter(e => !e.tapped).length;
 function nonCapacityReason(P, c, reaction = false) {
-  if (!reaction && isInterceptCard(c)) return T('interceptReactionOnly');
+  // KIRETSU: un INTERCEPT también se DESPLIEGA como una unidad normal (un cuerpo
+  // más en mesa, con su dado y sus poderes). Lo exclusivo de la reacción es
+  // jugarlo DESDE LA MANO en el turno del rival; la unidad ya en mesa no reacciona.
+  // (`reaction` sigue en la firma porque canReactWith valida con la marca puesta.)
   if (c.type === 'PILOT' && !units(P).some(u => u.card.type === 'MECH' && !u.pilot)) return T('facNeed');
   if (c.cost > awake(P)) return fmtT(T('needE'), { c: c.cost, n: awake(P) });
   if (c.sac > 0 && P.eTable.length < c.sac) return fmtT(T('needSac'), { n: c.sac });
@@ -3129,7 +3159,7 @@ function discardBattleUnit(P, u) {
   return true;
 }
 let choiceSerial = 0;
-function chooseCardsFromBoard({ title, text, cards, items = null, required = 1, multiple = false, returnItems = false, max = null }) {
+function chooseCardsFromBoard({ title, text, cards, items = null, required = 1, multiple = false, returnItems = false, max = null, peek = null, status = null }) {
   const source = items ?? cards ?? [];
   const entries = [...source].map((item, index) => ({ item, card: item?.card ?? item, index }));
   if (!entries.length) return Promise.resolve(null);
@@ -3139,7 +3169,10 @@ function chooseCardsFromBoard({ title, text, cards, items = null, required = 1, 
     const token = ++choiceSerial;
     const selected = new Set();
     const syncBtn = () => {
-      $('choiceStatus').textContent = multiple ? fmtT(T('handChoiceProgress'), { n: selected.size, need: needMax }) : '';
+      $('choiceStatus').textContent = status ? status(selected.size, needMax)
+        : (multiple ? fmtT(T('handChoiceProgress'), { n: selected.size, need: needMax }) : '');
+      $('choiceStatus').classList.toggle('big', !!status);
+      $('choiceStatus').classList.toggle('full', !!status && selected.size >= needMax);
       $('btnChoiceConfirm').disabled = !(selected.size >= needMin && selected.size <= needMax);
     };
     const finish = value => {
@@ -3154,6 +3187,12 @@ function chooseCardsFromBoard({ title, text, cards, items = null, required = 1, 
     $('choiceText').textContent = text;
     syncBtn();
     $('choiceCards').innerHTML = '';
+    // mesas a la vista (opcional): decidir sin perder de vista lo que está en juego
+    const pk = $('choicePeek');
+    pk.innerHTML = '';
+    const peekNode = peek ? peek() : null;
+    if (peekNode) pk.appendChild(peekNode);
+    pk.classList.toggle('hidden', !peekNode);
     $('btnChoiceConfirm').classList.toggle('hidden', !multiple);
     $('btnChoiceCancel').textContent = T('choiceCancel');
     entries.forEach(entry => {
@@ -3273,10 +3312,20 @@ async function playerGainEnergy() {
   const huecos = Math.min(MAX_ENERGY - P.eTable.length, MAX_ENERGY_PER_TURN);
   if (huecos <= 0 || !P.hand.length) { render(); return n; }
   G.busy = true; render();
-  // puedes colocar las que quieras (0..huecos): "listo" = no coloca ninguna
+  // puedes colocar las que quieras (0..huecos): "listo" = no coloca ninguna.
+  // La ventana enseña LAS DOS MESAS y lleva el contador 0/2 · 1/2 · 2/2, que es
+  // el tope real de energías de este turno.
   const chosen = await chooseCardsFromBoard({
     title: T('energyAsk'), text: fmtT(T('energyAskText'), { n: huecos }), cards: P.hand,
     required: 0, max: huecos, multiple: true,
+    peek: () => {
+      const box = el('div', 'boardpeek');
+      box.appendChild(mesaPeek(G.O, T('peekOpp')));
+      box.appendChild(mesaPeek(P, T('peekMine')));
+      const lg = el('span', 'bplegend'); lg.textContent = T('peekLegend'); box.appendChild(lg);
+      return box;
+    },
+    status: (k, tope) => k >= tope ? fmtT(T('energyPickFull'), { n: k, max: tope }) : fmtT(T('energyPick'), { n: k, max: tope, left: tope - k }),
   });
   G.busy = false;
   let puestos = 0;
@@ -3299,8 +3348,7 @@ function returnToMainMenu() {
   refreshMenuElo();
 }
 function startQuickRematch() {
-  const oldMode = G?.mode ?? modeSel;
-  const oldPersona = G?.persona ?? personaSel;
+    const oldPersona = G?.persona ?? personaSel;
   const mine = pick.map(p => ({ ...p }));
   $('end').classList.add('hidden');
   G = null;
@@ -3308,7 +3356,7 @@ function startQuickRematch() {
   if (mine.length !== 2) { openSetupFromMenu(); return; }
   const taken = mine.map(p => p.f);
   const pool = shuf(D.factions.filter(f => !taken.includes(f)));
-  newGame(mine, cpuDeckPair([pool[0], pool[1]]), oldPersona, oldMode);
+  newGame(mine, cpuDeckPair([pool[0], pool[1]]), oldPersona);
   sfx.shuffle();
 }
 
@@ -3351,9 +3399,10 @@ function rollCombinedD(main, pilot, st) {
     keptTint: (ds.find(d => d.kept === kept) ?? ds[0]).tint, // el dado guardado viste el color de la carta que lo sacó
   };
 }
-function addRollBonus(det, n) {
+function addRollBonus(det, n, why) {
   if (!det || !n) return det;
   det.kept += n; det.bonus += n; det.max = (det.max ?? det.faces + det.bonus) + n;
+  if (why) { det.why = det.why || []; det.why.push({ n, why }); } // de dónde sale el bono
   return det;
 }
 function rerollCombinedD(det) {
@@ -3615,7 +3664,8 @@ function drawSide(pre, P, mine) {
     const im = el('img'); im.src = img('back'); im.draggable = false; im.alt = T('energyT');
     const ce = el('div', 'card' + (e.tapped ? ' tapped' : ''));
     ce.appendChild(im);
-    ce.title = T('energyCardT') + ' (' + (e.tapped ? T('lifeT') : T('lifeR') + ' · ' + fmtT(T('stackEnergy'), { n: P.eTable.filter(x => !x.tapped).length }) + ')') + ')';
+    ce.title = T('energyCardT') + ' · ' + (e.tapped ? T('lifeT')
+      : T('lifeR') + ' · ' + P.eTable.filter(x => !x.tapped).length + ' ' + T('peekReadyMany'));
     d.appendChild(ce); ep.appendChild(d);
   });
   const ecnt = $(pre + 'EnergyCount');
@@ -3976,7 +4026,9 @@ function floatDie(node, det, kind) {
       if (typeof SIM !== 'undefined' && SIM.FAST) return resolve(); // simulación: sin dados visuales
       const lbl = kind === 'atk' ? T('dieAtk') : kind === 'def' ? T('dieDef') : T('dieLife');
       const host = node && node.appendChild ? node : document.getElementById('center');
-      const wrap = el('div', 'diefloatwrap');
+      const wrap = el('div', 'diefloatwrap deadroll');
+      const dice = el('div', 'diedice');
+      wrap.appendChild(dice);
       const pool = det && Array.isArray(det.pool) ? det.pool : [det];
       const kept = det && det.pool ? det.kept : det;
       const bonus = det && det.pool ? det.bonus : 0;
@@ -3988,15 +4040,41 @@ function floatDie(node, det, kind) {
         const isKept = !marked && v === bestRaw;
         if (isKept) { marked = true; return; }
         const cv = dieCanvas3D(faces, v, kind, 54, lbl, det?.tints?.[di] ?? tint);
-        if (cv) wrap.appendChild(cv);
-        else { const d = el('div', 'die ' + kind + ' mini'); d.innerHTML = v + '<small>' + lbl + '</small>'; wrap.appendChild(d); }
+        if (cv) dice.appendChild(cv);
+        else { const d = el('div', 'die ' + kind + ' mini'); d.innerHTML = v + '<small>' + lbl + '</small>'; dice.appendChild(d); }
       });
       const big = dieCanvas3D(faces, bestRaw, kind, 168, lbl, det?.keptTint ?? tint);
       const bigTint = det?.keptTint ?? tint;
       let animP = null;
-      if (big) { wrap.appendChild(big); animP = animateDie3D(big, faces, bestRaw, kind, lbl, true, bigTint); }
-      else { const d = el('div', 'die ' + kind + ' kept'); d.innerHTML = kept + '<small>' + lbl + '</small>'; wrap.appendChild(d); }
-      if (bonus) { const cb = el('div', 'diebonus'); cb.textContent = '+' + bonus; wrap.appendChild(cb); }
+      if (big) { dice.appendChild(big); animP = animateDie3D(big, faces, bestRaw, kind, lbl, true, bigTint); }
+      else { const d = el('div', 'die ' + kind + ' kept'); d.innerHTML = kept + '<small>' + lbl + '</small>'; dice.appendChild(d); }
+      // LA CUENTA, a la vista y en grande: [cara] + [BONO] = [total]. El dado
+      // guardado enseña la cara CRUDA, así que sin esta línea el número final de
+      // la tirada no se veía en ningún sitio. Debajo, de dónde sale el bono.
+      const raw = Math.max(1, Math.round(bestRaw));
+      const flat = bonus - (det?.why ? det.why.reduce((s, w) => s + w.n, 0) : 0);
+      const whys = [];
+      if (flat > 0) whys.push(T('bonusCard') + ' +' + flat);
+      if (det?.why) for (const w of det.why) whys.push(w.why + ' +' + w.n);
+      const line = el('div', 'dietot');
+      if (bonus) {
+        const n0 = el('span', 'dieneto'); n0.textContent = raw;
+        const pl = el('span', 'dieplus'); pl.textContent = '+';
+        const bn = el('span', 'diebonus'); bn.textContent = bonus;
+        const eq = el('span', 'dieeq'); eq.textContent = '=';
+        const fn = el('span', 'diefinal'); fn.textContent = kept;
+        line.appendChild(n0); line.appendChild(pl); line.appendChild(bn); line.appendChild(eq); line.appendChild(fn);
+      } else {
+        const fn = el('span', 'diefinal'); fn.textContent = kept; line.appendChild(fn);
+      }
+      const calc = el('div', 'diecalc');
+      calc.appendChild(line);
+      if (bonus) {
+        const w = el('div', 'diewhy');
+        w.textContent = T('bonusWhy') + ' · ' + (whys.length ? whys.join(' · ') : '+' + bonus);
+        calc.appendChild(w);
+      }
+      wrap.appendChild(calc);
       // anclar a la posición del host (posición fija): los renders ya no lo borran
       let anchored = false;
       if (host !== document.body) {
@@ -4143,7 +4221,7 @@ async function resolveUnitCombat(attacker, attackerP, aDet, target, defenderP, r
     await flyAttack(atkNode, tgtNode, attacker.pilot);
     await atkP;
     const dDet = rollCombinedD(target.card, target.pilot, 'def');
-    addRollBonus(dDet, aura(defenderP, 'RALLY', target.card.faction, target));
+    addRollBonus(dDet, aura(defenderP, 'RALLY', target.card.faction, target), 'RALLY');
     await floatDie(tgtNode, dDet, 'def');
     await maybeReroll(dDet, defenderP, unitLabel(target), 'def');
     if (dDet.rerolled) await floatDie(tgtNode, dDet, 'def');
@@ -4179,8 +4257,8 @@ async function resolveMyAttack(targetUnit) {
   render(); // el giro debe verse mientras se resuelve el combate, no al final
   try {
     const aDet = rollCombinedD(myU.card, myU.pilot, 'atk');
-    addRollBonus(aDet, aura(G.P, 'WARCRY', myU.card.faction, myU));
-    if (has(myU, 'COUNTDOWN')) addRollBonus(aDet, 3);
+    addRollBonus(aDet, aura(G.P, 'WARCRY', myU.card.faction, myU), 'WARCRY');
+    if (has(myU, 'COUNTDOWN')) addRollBonus(aDet, 3, 'COUNTDOWN');
     banner(fmtT(T('atkBanner'), { c: myU.card.name }), false);
     await maybeRerollAfterDisplay(slotCard('my', G.P.battle, myU), aDet, G.P, unitLabel(myU), 'atk');
     await sleep(750);
@@ -4203,12 +4281,12 @@ async function resolveMyAttack(targetUnit) {
       else {
         const topLife = G.O.lives.find(l => l.lifeCard);
         tapLives(G.O); // al atacar vidas se giran todas: ya no se puede atacar más este turno
-        const dieStr = MODES[G.mode].ladder(li)[0];
+        const dieStr = ladderVidas(li)[0];
         const atkP = aDet.rollShown ? Promise.resolve() : floatDie(slotCard('my', G.P.battle, myU), aDet, 'atk');
         await flyAttack(slotCard('my', G.P.battle, myU), topLifeNode('opp'), myU.pilot);
         await atkP;
         const rDet = rollDieStrD(dieStr, 'def', tintOf({ faction: G.O.facs?.[0] }));
-        addRollBonus(rDet, units(G.O).some(x => has(x, 'GUARDIAN')) ? 1 : 0); // LCG: GUARDIAN no se acumula (máx +1)
+        addRollBonus(rDet, units(G.O).some(x => has(x, 'GUARDIAN')) ? 1 : 0, 'GUARDIAN'); // LCG: GUARDIAN no se acumula (máx +1)
         const roll = rDet.kept;
         await floatDie(topLifeNode('opp'), rDet, 'lifeRoll');
         await sleep(250);
@@ -4374,7 +4452,7 @@ async function aiTurnFor(att, dfn, pid) { // pid = personalidad del que juega es
     else if (defs.length && rng() < 0.55) target = defs.sort((a, b) => (parseDice(b.card.def).faces) - (parseDice(a.card.def).faces))[0];
     else if (livesOpen(E)) { // vidas
       const li = E.lives.filter(l => l.lifeCard).length;
-      const dieStr = MODES[G.mode].ladder(li)[0];
+      const dieStr = ladderVidas(li)[0];
       const p = parseDieStr(dieStr);
       const hp = cfg.hpPrio;
       const go = hp === 'any' || (hp === 'safe' && p.faces <= 6) || (hp === 'lethal' && aExp >= p.faces * 0.75);
@@ -4392,8 +4470,8 @@ async function aiTurnFor(att, dfn, pid) { // pid = personalidad del que juega es
     render(); // la CPU también muestra el giro desde el inicio de la resolución
     await sleep(1000); // pausa para ver QUÉ carta se gira antes de tirar
     const aDet = atkPooledD(u, 'atk');
-    addRollBonus(aDet, aura(P, 'WARCRY', u.card.faction, u));
-    if (has(u, 'COUNTDOWN')) addRollBonus(aDet, 3);
+    addRollBonus(aDet, aura(P, 'WARCRY', u.card.faction, u), 'WARCRY');
+    if (has(u, 'COUNTDOWN')) addRollBonus(aDet, 3, 'COUNTDOWN');
     let aVal = aDet.kept;
     banner(fmtT(T('atkBannerN'), { p: P.name, c: u.card.name }), P === G.O);
     await maybeRerollAfterDisplay(slotCard(P === G.O ? 'opp' : 'my', P.battle, u), aDet, P, unitLabel(u), 'atk');
@@ -4435,14 +4513,14 @@ async function aiTurnFor(att, dfn, pid) { // pid = personalidad del que juega es
       const li = E.lives.filter(l => l.lifeCard).length;
       if (li > 0) {
         tapLives(E); // al atacar vidas se giran todas: ya no se puede atacar más este turno
-        const dieStr = MODES[G.mode].ladder(li)[0];
+        const dieStr = ladderVidas(li)[0];
         // también vuela a por VIDAS (el ATK ya se mostró antes del posible reroll/intercept)
         const atkNode = slotCard(P === G.O ? 'opp' : 'my', P.battle, u);
         const atkP = aDet.rollShown ? Promise.resolve() : floatDie(atkNode, aDet, 'atk');
         await flyAttack(atkNode, topLifeNode(E === G.O ? 'opp' : 'my'), u.pilot);
         await atkP;
         const rDet = rollDieStrD(dieStr, 'def', tintOf({ faction: E.facs?.[0] }));
-        addRollBonus(rDet, units(E).some(x => has(x, 'GUARDIAN')) ? 1 : 0); // LCG: GUARDIAN no se acumula (máx +1)
+        addRollBonus(rDet, units(E).some(x => has(x, 'GUARDIAN')) ? 1 : 0, 'GUARDIAN'); // LCG: GUARDIAN no se acumula (máx +1)
         const roll = rDet.kept;
         await floatDie(topLifeNode(E === G.O ? 'opp' : 'my'), rDet, 'lifeRoll');
         await sleep(250);
@@ -4496,6 +4574,44 @@ function showPile(P) {
   sfx.flip();
 }
 $('btnPileClose').onclick = () => $('pile').classList.add('hidden');
+
+/* ---------- resumen de una mesa para las ventanas de elección ----------
+   Lo que hay EN JUEGO, en pequeño: cada unidad con su dado de atacar y de
+   defender, si está girada y qué piloto lleva; más vidas, energía (cuántas
+   listas), mazo, descarte y mano. Al pasar el ratón por una carta se ve en
+   grande, igual que en el tablero. */
+function mesaPeek(P, titulo) {
+  const row = el('div', 'bprow');
+  const h = el('b', 'bptitle');
+  const vidas = P.lives.filter(l => l.lifeCard).length;
+  const listas = P.eTable.filter(e => !e.tapped).length;
+  h.textContent = titulo + ' · ' + vidas + ' ' + T('peekLives') + ' · ⚡' + P.eTable.length + '/' + MAX_ENERGY +
+    ' (' + listas + ' ' + (listas === 1 ? T('peekReadyOne') : T('peekReadyMany')) + ')';
+  row.appendChild(h);
+  const meta = el('span', 'bpmeta');
+  meta.textContent = T('deck') + ' ' + P.lib.length + ' · ' + T('toDiscard') + ' ' + P.discard.length +
+    ' · ' + T('hand') + ' ' + P.hand.length;
+  row.appendChild(meta);
+  const cards = el('div', 'bpcards');
+  const us = units(P);
+  if (!us.length) { const z = el('span', 'bpnone'); z.textContent = T('peekEmpty'); cards.appendChild(z); }
+  for (const u of us) {
+    const cell = el('div', 'bpcell');
+    cell.appendChild(cardEl(u.card, {
+      tapped: u.tapped,
+      title: u.card.name + (u.pilot ? ' + ' + u.pilot.name : '') +
+        ' · ATK ' + u.card.atk + ' · DEF ' + u.card.def + (u.tapped ? ' · ' + T('peekSpent') : ''),
+    }));
+    const st = el('span', 'bpstat');
+    st.textContent = u.card.atk + '/' + u.card.def;
+    cell.appendChild(st);
+    if (u.pilot) { const sp = el('span', 'bpstat'); sp.textContent = '★ ' + u.pilot.name; cell.appendChild(sp); }
+    if (u.tapped) { const t = el('span', 'bpstat warn'); t.textContent = T('peekSpent'); cell.appendChild(t); }
+    cards.appendChild(cell);
+  }
+  row.appendChild(cards);
+  return row;
+}
 
 /* ---------- eliminación / fin ---------- */
 function eliminate(P, reason) {
@@ -4577,7 +4693,7 @@ function showEnd(t, s) {
       $('endStats').innerHTML = endStatsHtml(); $('endStats').classList.remove('hidden');
     }
     $('endTitle').textContent = t; $('endText').textContent = s;
-    const spec = G.spec, specMode = G.mode;
+    const spec = G.spec, specMode = !!G.spec;
     const after = spec.after;
     $('btnAgain').textContent = typeof after === 'function' ? (LANG === 'en' ? 'Continue' : 'Continuar') : T('btnAgain');
     $('end').classList.remove('hidden');
@@ -4604,9 +4720,8 @@ function showEnd(t, s) {
   const res = won ? 1 : drew ? 0.5 : 0;
   learnTact(G.persona, 1 - res); // la CPU aprende desde SU perspectiva
   const key = G.persona, pname = PERSONAS[key].name;
-  const mult = MODES[G.mode].elo; // SIEGE dobla el ELO (a bien y a mal)
-  const [np0, nc0] = eloApply(ST.eloP, ST.elo[key] ?? 1000, res);
-  const np = Math.max(0, ST.eloP + (np0 - ST.eloP) * mult), nc = Math.max(0, (ST.elo[key] ?? 1000) + (nc0 - (ST.elo[key] ?? 1000)) * mult);
+    const [np0, nc0] = eloApply(ST.eloP, ST.elo[key] ?? 1000, res);
+  const np = Math.max(0, ST.eloP + (np0 - ST.eloP)), nc = Math.max(0, nc0);
   const dp = Math.round(np - ST.eloP), dc = Math.round(nc - (ST.elo[key] ?? 1000));
   ST.n++; ST.turns += G.turn; ST.ms += Date.now() - (G.t0 ?? Date.now());
   const pr = ST.per[key] ?? (ST.per[key] = { w: 0, l: 0, d: 0 }); // CPUs nuevas: entrada perezosa
@@ -4623,10 +4738,10 @@ function showEnd(t, s) {
   [...G.P.battle, ...G.P.discard, ...G.P.hand, ...G.P.lib].forEach(c => { if (c && c.set) setsUsed.add(c.set); if (c && c.faction) facsetUsed.add(c.faction + '-s' + (c.set ?? 1)); });
   setsUsed.forEach(s => bump(ST.meta.set, 'set' + s));
   facsetUsed.forEach(k => bump(ST.meta.facset, k));
-  ST.hist.unshift({ vs: pname, res: res === 1 ? 'V' : res === 0 ? 'D' : 'E', dp, date: new Date().toLocaleDateString(), mode: G.mode });
+  ST.hist.unshift({ vs: pname, res: res === 1 ? 'V' : res === 0 ? 'D' : 'E', dp, date: new Date().toLocaleDateString() });
   ST.hist = ST.hist.slice(0, 30);
   saveStats(); // guarda stats y ELO (ya no hay hitos de recompensa)
-  s += ` ELO${mult > 1 ? ' x' + mult + ' (SIEGE)' : ''}: tú ${Math.round(np)} (${dp >= 0 ? '+' : ''}${dp}) · ${pname} ${Math.round(nc)} (${dc >= 0 ? '+' : ''}${dc}).`;
+  s += ` ELO: tú ${Math.round(np)} (${dp >= 0 ? '+' : ''}${dp}) · ${pname} ${Math.round(nc)} (${dc >= 0 ? '+' : ''}${dc}).`;
   // cabecera del resumen: quién gana/pierde/empata con su ELO nuevo y el delta
   const dP = (dp >= 0 ? '+' : '') + dp, dC = (dc >= 0 ? '+' : '') + dc;
   const myE = Math.round(np), opE = Math.round(nc);
@@ -4692,7 +4807,7 @@ $('btnKeep').onclick = () => {
 };
 
 /* ---------- setup: draft de facción×set + modo + rival ---------- */
-let pick = [], personaSel = 'wences', modeSel = 'infiltration';
+let pick = [], personaSel = 'wences';
 let personaPool = []; // 3 retadores al azar de todas (refresca al entrar al setup)
 let facSetSel = {}; // { facción: set elegido (1-4, o el que haya) }
 function refreshMenuElo() {
@@ -4732,16 +4847,6 @@ function refreshFacInfo() {
   $('facInfo').textContent = pick.length === 2 ?
     T('myDeck') + FAC_LABEL[pick[0].f] + ' ' + SET_LABEL[pick[0].s] + ' + ' + FAC_LABEL[pick[1].f] + ' ' + SET_LABEL[pick[1].s] : T('deckOf');
 }
-function renderModes() {
-  const mp = $('modePick'); mp.innerHTML = '';
-  Object.entries(MODES).forEach(([k, m]) => {
-    const b = el('button', 'modebtn' + (k === modeSel ? ' picked' : ''));
-    b.innerHTML = '<b>' + esc(m.name) + '</b><small>' + esc(m.desc) + '</small>' + (m.elo > 1 ? '<span class="x2">' + T('x2') + m.elo + '</span>' : '');
-    b.onclick = () => { modeSel = k; renderModes(); };
-    mp.appendChild(b);
-  });
-}
-renderModes();
 buildFacGrid(); refreshFacInfo();
 $('btnStart').onclick = () => {
   $('setup').classList.add('hidden');
@@ -4750,7 +4855,7 @@ $('btnStart').onclick = () => {
   const pool = shuf(D.factions.filter(f => !taken.includes(f)));
   const others = cpuDeckPair([pool[0], pool[1]]); // el rival escala con tu avance: si
   // el rival puede responder con cualquiera de los 6 sets (todos disponibles).
-  newGame(pick, others, personaSel, modeSel);
+  newGame(pick, others, personaSel);
   sfx.shuffle();
 };
 const perGrid = $('personaPick');
@@ -5133,7 +5238,7 @@ function setLang(l) {
     else { if (G.spec.botId && PERSONAS[G.spec.botId]) G.P.name = PERSONAS[G.spec.botId].name; if (G.spec.topId && PERSONAS[G.spec.topId]) G.O.name = PERSONAS[G.spec.topId].name; }
     render();
   }
-  else if (!$('setup').classList.contains('hidden')) { buildFacGrid(); refreshFacInfo(); renderModes(); buildPersonaGrid(); $('personaInfo').textContent = PERSONAS[personaSel].name + ' (' + eloTxt(personaSel) + ')' + T('waits'); cpuTipBind($('personaInfo'), personaSel); }
+  else if (!$('setup').classList.contains('hidden')) { buildFacGrid(); refreshFacInfo(); buildPersonaGrid(); $('personaInfo').textContent = PERSONAS[personaSel].name + ' (' + eloTxt(personaSel) + ')' + T('waits'); cpuTipBind($('personaInfo'), personaSel); }
   else if (!$('sets').classList.contains('hidden')) renderSets();
   else if (!$('stats').classList.contains('hidden')) renderStats();
   else if (!$('statsColors').classList.contains('hidden')) renderColorStats();
@@ -5224,7 +5329,7 @@ $('btnWatchStart').onclick = () => {
   // al lanzar el duelo se colapsa el selector (el botón lo reabre)
   $('watchRow').classList.add('hidden');
   $('watchActions').classList.add('hidden');
-  watchMatch(wTop, wBot, modeSel);
+  watchMatch(wTop, wBot);
   sfx.shuffle();
 };
 /* abandonar un espectáculo en curso: corta el bucle de turnos y vuelve al menú */
@@ -5256,14 +5361,14 @@ function cpuDeckPair(firms, allowMixedSet = true) {
   const fs = shuf(firms);
   return [{ f: fs[0], s: allowMixedSet ? cpuPickSet(fs[0]) : 1 }, { f: fs[1], s: allowMixedSet ? cpuPickSet(fs[1]) : 1 }];
 }
-async function watchMatch(aId, bId, mode, after) {
+async function watchMatch(aId, bId, after) {
   const watchPage = $('cpuWatchSection');
   if (watchPage) watchPage.classList.add('hidden');
   // dos CPUs jugando en vivo: A arriba, B abajo (4 facciones distintas entre ambos)
   const fs = shuf(D.factions);
   const pA = cpuDeckPair([fs[0], fs[1]]), pB = cpuDeckPair([fs[2], fs[3]]);
   ['setup', 'menu', 'champ'].forEach(id => $(id).classList.add('hidden'));
-  newGame(pA, pB, aId, mode, {
+  newGame(pA, pB, aId, {
     topId: aId, botId: bId,
     after: after ?? null,
   });
@@ -5380,7 +5485,7 @@ async function ligaSimOne(m, pTop = null, pBot = null) {
   const prevG = G;
   SIM.FAST = true; SIM.cur = sim;
   try {
-    newGame(pTop, pBot, m.a, modeSel, { topId: m.a, botId: m.b, sim: true });
+    newGame(pTop, pBot, m.a, { topId: m.a, botId: m.b, sim: true });
     G.ligaSim = true;
     // el sorteo inicial y el bucle de turnos ya corren solos en modo rápido:
     // btnKeep no se usa (no hay humano); startSpecMatch arranca el specLoop.
@@ -5672,7 +5777,7 @@ $('lgTabMeta').onclick = () => ligaTab('meta');
 $('lgTabRank').onclick = () => ligaTab('rank');
 /* partida normal contra un rival concreto (usada por el campeonato) */
 let G_after = null, LAST_RESULT = null;
-function startMatch(oppId, mode, after) {
+function startMatch(oppId, after) {
   if (pick.length !== 2) { // partida directa sin pasar por el setup: 2 facciones al azar
     pick = shuf(D.factions).slice(0, 2).map(f => ({ f, s: shuf(ALL_SETS)[0] }));
   }
@@ -5681,7 +5786,7 @@ function startMatch(oppId, mode, after) {
   const taken = pick.map(p => p.f);
   const pool = shuf(D.factions.filter(f => !taken.includes(f)));
   const others = cpuDeckPair([pool[0], pool[1]]); // el rival también escala con tu avance
-  newGame(pick, others, oppId, mode);
+  newGame(pick, others, oppId);
 }
 
 /* ============================================================
@@ -5814,7 +5919,7 @@ function renderChamp() {
       // duelos entre CPUs pendientes de la ronda activa: verlos como espectador
       if (!isDone && m.a !== PLAYER_ID && m.b !== PLAYER_ID && r === CH.rounds[champRoundIdx()]) {
         const w = el('button'); w.textContent = '👀'; w.title = T('watchDuel') + ' (' + sA + '–' + sB + ' · ' + boLabel + ')';
-        w.onclick = () => watchMatch(m.a, m.b, modeSel, win => {
+        w.onclick = () => watchMatch(m.a, m.b, win => {
           m.winsA = m.winsA ?? 0;
           m.winsB = m.winsB ?? 0;
           if (win === m.a) m.winsA++;
@@ -5848,7 +5953,7 @@ function renderChamp() {
       if (!curM) return;
       const oppId = curM.a === PLAYER_ID ? curM.b : curM.a;
       personaSel = oppId;
-      startMatch(oppId, modeSel, () => { champAfterMyMatch(); openChamp(); });
+      startMatch(oppId, () => { champAfterMyMatch(); openChamp(); });
     };
   } else {
     $('btnChampPlay').disabled = false;
@@ -5904,7 +6009,7 @@ $('btnChampPlay').onclick = () => {
   if (!m) return;
   const oppId = m.a === PLAYER_ID ? m.b : m.a;
   personaSel = oppId;
-  startMatch(oppId, modeSel, () => { champAfterMyMatch(); openChamp(); });
+  startMatch(oppId, () => { champAfterMyMatch(); openChamp(); });
 };
 
 /* ============================================================
@@ -6110,7 +6215,7 @@ function leaguePlayMyMatch() {
   personaSel = base;
   $('league').classList.add('hidden');
   try {
-    startMatch(base, modeSel, () => { LEAGUE_MATCH_IN_PROGRESS = false; leagueAfterMyMatch(); });
+    startMatch(base, () => { LEAGUE_MATCH_IN_PROGRESS = false; leagueAfterMyMatch(); });
   } catch (error) {
     LEAGUE_MATCH_IN_PROGRESS = false;
     $('league').classList.remove('hidden');
@@ -6296,6 +6401,11 @@ function renderLeague() {
   if (!LEAGUE) return;
   if (!LEAGUE.results || typeof LEAGUE.results !== 'object') LEAGUE.results = {};
   if (!Array.isArray(LEAGUE.history)) LEAGUE.history = [];
+  // Si tu partido de la jornada ya tiene resultado pero la jornada no avanzó (te
+  // cerraste la web a mitad, o el guardado quedó a medias), la cerramos solos:
+  // leagueFinishMatchday() es idempotente y nunca vuelve a jugar tu partido.
+  const myDivPrev = leagueFindMyDiv(), mmPrev = leagueMyMatchdayMatch();
+  if (mmPrev && leagueHasResult(myDivPrev, mmPrev)) leagueFinishMatchday();
   const myDiv = leagueFindMyDiv();
   const tier = leagueTierOfDiv(myDiv);
   const divInTier = leagueDivInTier(myDiv) + 1;
@@ -6336,9 +6446,12 @@ function renderLeague() {
     
     // Botón jugar partido
     const myMatch = leagueMyMatchdayMatch();
-    $('btnLeaguePlay').classList.toggle('hidden', !myMatch || LEAGUE.currentMatchday >= LEAGUE_SEASON_MATCHES);
-    $('btnLeagueSimRest').classList.toggle('hidden', LEAGUE.currentMatchday >= LEAGUE_SEASON_MATCHES);
-    $('btnLeagueNextSeason').classList.toggle('hidden', !leagueSeasonComplete());
+    const jugable = !!myMatch && !leagueHasResult(myDiv, myMatch) && LEAGUE.currentMatchday < LEAGUE_SEASON_MATCHES;
+    $('btnLeaguePlay').classList.toggle('hidden', !jugable);
+    $('btnLeagueSimRest').classList.toggle('hidden', LEAGUE.currentMatchday >= LEAGUE_SEASON_MATCHES && leagueSeasonComplete());
+    // Siempre hay salida: si la temporada llegó al final (aunque quedara alguna
+    // división a medias), el botón de nueva temporada aparece y desbloquea.
+    $('btnLeagueNextSeason').classList.toggle('hidden', LEAGUE.currentMatchday < LEAGUE_SEASON_MATCHES);
     
   } else if (activeTab === 'matches') {
     // Partidos: mostrar marcadores guardados y permitir jugar el encuentro actual.
@@ -6360,7 +6473,7 @@ function renderLeague() {
           if (sa && sb && (sa.W + sa.D + sa.L) > 0 && (sb.W + sb.D + sb.L) > 0) {
             res = '<span class="league-score old-score">' + T('leagueMatchPlayed') + '</span>';
           }
-        } else if (md === LEAGUE.currentMatchday && isMe) {
+        } else if (md === LEAGUE.currentMatchday && isMe && md < LEAGUE_SEASON_MATCHES) {
           res = '<button class="primary" onclick="leaguePlayMyMatchFromUI()">' + T('leaguePlay') + '</button>';
         }
         html += '<tr' + (isMe ? ' class="me"' : '') + '><td>' + (md + 1) + '</td><td>' + nameA + '</td><td>' + T('leagueMatchVs') + '</td><td>' + nameB + '</td><td>' + res + '</td></tr>';
